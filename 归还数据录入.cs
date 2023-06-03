@@ -58,15 +58,20 @@ namespace Libarry
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "" && textBox1.Text != "" )
+            if (comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "")
             {
                 Connect dao = new Connect();
                 string sql = String.Format("SELECT 应还日期 FROM Tborrow WHERE 读者编号 = '{0}' AND 图书编号 = '{1}' AND 借书日期 = '{2}'",
                     comboBox1.Text, comboBox2.Text, comboBox3.Text);
                 IDataReader dc = dao.read(sql);
                 dc.Read();
+                String duetime = dc[0].ToString();
+                Convert.ToDateTime(duetime);
+                //还书日期
+                sql = String.Format("SELECT GETDATE()");
+                dc = dao.read(sql);
+                dc.Read();
                 String returntime = dc[0].ToString();
-                Convert.ToDateTime(returntime);
                 //罚款金额计算
                 sql = String.Format("SELECT ISNULL(GREATEST(价格 * LEAST(0.01 * DATEDIFF(day, 应还日期, GETDATE()),1),0),0) AS 超期罚款金额 FROM Tborrow bo JOIN Tbook b ON bo.图书编号 = b.图书编号 WHERE 读者编号 = '{0}' AND b.图书编号 = '{1}' AND 借书日期 = '{2}'", 
                     comboBox1.Text, comboBox2.Text, comboBox3.Text);
@@ -75,7 +80,7 @@ namespace Libarry
                 float fakuan = float.Parse(dc[0].ToString());
 
                 sql = String.Format("INSERT INTO Treturn VALUES ('{0}','{1}','{2}', '{3}', '{4}', {5})",
-                comboBox1.Text, comboBox2.Text, comboBox3.Text, returntime, textBox1.Text, fakuan);
+                comboBox1.Text, comboBox2.Text, comboBox3.Text, duetime, returntime, fakuan);
                 int n = dao.Execute(sql);
                 if (n > 0)
                 {
