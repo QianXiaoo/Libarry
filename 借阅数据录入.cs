@@ -110,5 +110,13 @@ namespace Libarry
                 MessageBox.Show("输入有空");
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            comboBox1.Text = "";
+            comboBox2.Text = "";
+            textBox1.Text = "";
+            textBox2.Text = "";
+        }
     }
 }

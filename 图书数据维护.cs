@@ -67,7 +67,7 @@ namespace Libarry
                     textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox7.Text, textBox1.Text);
                 int n = dao.Execute(sql);
                 if (n > 0) MessageBox.Show("图书信息修改成功");
-                else MessageBox.Show("图书信息添加失败");
+                else MessageBox.Show("图书信息修改失败");
                 dao.DaoClose();
                 show();
             }
@@ -119,6 +119,17 @@ namespace Libarry
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox7.Text = "";
         }
     }
 }

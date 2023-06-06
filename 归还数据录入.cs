@@ -136,5 +136,12 @@ namespace Libarry
             dc.Close();
             dao.DaoClose();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            comboBox1.Text = "";
+            comboBox2.Text = "";
+            comboBox3.Text = "";
+        }
     }
 }

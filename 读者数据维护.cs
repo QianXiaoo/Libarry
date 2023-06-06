@@ -71,7 +71,7 @@ namespace Libarry
                     textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox1.Text);
                 int n = dao.Execute(sql);
                 if (n > 0) MessageBox.Show("读者信息修改成功");
-                else MessageBox.Show("读者信息添加失败");
+                else MessageBox.Show("读者信息修改失败");
                 dao.DaoClose();
                 show();
             }
@@ -90,8 +90,12 @@ namespace Libarry
                 DialogResult dr = MessageBox.Show("你确定要删除该读者信息吗？", "消息框", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (dr == DialogResult.OK)
                 {
-                    string sql = String.Format("Delete from Treader where 读者编号 = '{0}'", id);
                     Connect dao = new Connect();
+                    string sql = String.Format("Delete from Tborrow where 读者编号 = '{0}'", id);
+                    dao.Execute(sql);
+                    sql = String.Format("Delete from Treturn where 读者编号 = '{0}'", id);
+                    dao.Execute(sql);
+                    sql = String.Format("Delete from Treader where 读者编号 = '{0}'", id);
                     if (dao.Execute(sql) > 0)
                     {
                         MessageBox.Show("删除成功");
@@ -108,6 +112,16 @@ namespace Libarry
             {
                 MessageBox.Show("请先选中要删除的读者信息", "消息框", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
         }
     }
 }
